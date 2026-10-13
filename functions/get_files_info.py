@@ -2,10 +2,6 @@ import os
 
 def get_files_info(working_directory: str, directory: str = ".") -> str:
     try:
-        is_dir = os.path.isdir(directory)
-        if not is_dir:
-            return f'Error: "{directory}" is not a directory'
-        
         working_dir_abs = os.path.abspath(working_directory)
         target_dir = os.path.normpath(os.path.join(working_dir_abs, directory))
 
@@ -16,7 +12,14 @@ def get_files_info(working_directory: str, directory: str = ".") -> str:
         if not os.path.isdir(target_dir):
             return f'Error: "{directory}" is not a directory'
 
-        return f'Success: "{directory}" is within the working directory'
+        lines = []
+        for element in os.listdir(target_dir):
+            element_path = os.path.join(target_dir, element)
+            is_dir = os.path.isdir(element_path)
+            size = os.path.getsize(element_path)
+            lines.append(f"- {element}: file_size={size} bytes, is_dir={is_dir}")
+
+        return "\n".join(lines)
 
     except Exception as e:
         return f'Error: {str(e)}'
