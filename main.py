@@ -2,6 +2,7 @@ import os
 import argparse
 from dotenv import load_dotenv
 from openai import OpenAI
+from prompts import system_prompt
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Chatbot")
@@ -22,6 +23,7 @@ def main() -> None:
     )
 
     messages = [
+        {"role": "system", "content": system_prompt},
         { "role": "user", "content": args.user_prompt},
     ]
     generate_content(client, messages, args)
@@ -30,6 +32,7 @@ def generate_content(client: OpenAI, messages: list, args) -> None:
     response = client.chat.completions.create(
         model="openrouter/free",
         messages=messages,
+        temperature=0,
     )
     if not response.usage:
         raise RuntimeError("API response appears to be malformed")
