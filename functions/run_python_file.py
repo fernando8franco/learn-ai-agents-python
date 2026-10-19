@@ -36,8 +36,6 @@ def run_python_file(working_directory: str, file_path: str, args: list[str] | No
     except Exception as e:
         return f"Error: executing Python file: {e}"
 
-import subprocess
-
 
 def format_process_output(result: subprocess.CompletedProcess) -> str:
     parts = []
@@ -62,3 +60,27 @@ def format_process_output(result: subprocess.CompletedProcess) -> str:
             parts.append(f"STDERR:\n{result.stderr.strip()}")
 
     return "\n\n".join(parts)
+
+schema_run_python_file = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": "Executes a specified Python (.py) file with optional command-line arguments. Enforces a 30-second execution timeout.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "The relative or target path of the Python file (.py) to execute.",
+                },
+                "args": {
+                    "type": "array",
+                    "description": "An optional list of command-line arguments to pass to the Python script.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+            },
+        },
+    },
+}
