@@ -28,13 +28,17 @@ schema_get_files_info = {
     "type": "function",
     "function": {
         "name": "get_files_info",
-        "description": "Lists files in a specified directory relative to the working directory, providing file size and directory status",
+        "description": (
+            "Retrieves metadata (file size, directory status, names) for multiple files "
+            "within a specified directory. Use this when you need an overview or list of files/directories, "
+            "NOT for reading the actual body text of a file."
+        ),
         "parameters": {
             "type": "object",
             "properties": {
                 "directory": {
                     "type": "string",
-                    "description": "Directory path to list files from, relative to the working directory (default is the working directory itself)",
+                    "description": "Directory path to list files from, relative to the working directory (defaults to current directory).",
                 },
             },
         },

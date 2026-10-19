@@ -40,6 +40,10 @@ schema_write_file = {
                     "description": "The text content to write into the file.",
                 },
             },
+            "required": [
+                "file_path",
+                "content"
+            ]
         },
     },
 }
